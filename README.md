@@ -2,17 +2,17 @@
   <img src="frontend/src/components/img/logo.png" alt="Fleet Manager Logo" width="120" />
 </p>
 
-<h1 align="center">Fleet Manager — Gestion de Parc Automobile</h1>
+<h1 align="center">Fleet Manager — Vehicle Fleet Management System</h1>
 
 <p align="center">
-  <strong>Application web de gestion de flotte automobile pour Algerie Telecom</strong>
+  <strong>Full-stack web application for managing corporate vehicle fleets, built for Algerie Telecom</strong>
 </p>
 
 <p align="center">
-  <a href="https://dot-parcauto.netlify.app/">Demo en ligne</a> ·
-  <a href="#fonctionnalites">Fonctionnalites</a> ·
-  <a href="#stack-technique">Stack technique</a> ·
-  <a href="#installation">Installation</a>
+  <a href="https://dot-parcauto.netlify.app/">Live Demo</a> ·
+  <a href="#features">Features</a> ·
+  <a href="#tech-stack">Tech Stack</a> ·
+  <a href="#getting-started">Getting Started</a>
 </p>
 
 <p align="center">
@@ -26,7 +26,7 @@
 
 ---
 
-## Apercu
+## Preview
 
 <p align="center">
   <img src="screenshots/login-page.png" alt="Login Page" width="700" />
@@ -34,86 +34,86 @@
 
 ---
 
-## Contexte
+## About
 
-> Projet realise dans le cadre d'un **stage de fin d'etudes** (SPE, 2eme annee Cycle Superieur, option Systemes Informatiques et Logiciels) a l'**Ecole Nationale Superieure d'Informatique (ESI)**, au sein du service des **Moyens Generaux** de la **Direction Operationnelle d'Algerie Telecom — Relizane**.
+> Developed during an end-of-studies internship (2nd year, Higher Cycle — Software & Information Systems) at **ESI** (Ecole Nationale Superieure d'Informatique), within the General Resources department of **Algerie Telecom**.
 
-Algerie Telecom gere une flotte de **47 vehicules operationnels** repartis sur plusieurs centres dans la wilaya de Relizane. La gestion manuelle et fragmentee des donnees (kilometrage, couts de carburant, reparations, pieces detachees) entrainait des pertes de temps, des risques d'erreurs et un manque de visibilite pour la prise de decision.
+Algerie Telecom operates a fleet of vehicles distributed across multiple regional centers. Managing vehicle data manually — mileage tracking, fuel costs, repairs, spare parts inventory — led to inefficiencies, human errors, and a lack of visibility for decision-making.
 
-**Fleet Manager** a ete concu pour **centraliser, securiser et automatiser** ces processus via une interface web moderne adaptee a deux profils d'utilisateurs :
+**Fleet Manager** was built to **centralize, secure, and automate** these operations through a modern web interface with role-based access control:
 
 | Role | Description |
 |------|-------------|
-| **Administrateur** | Ingenieur des Moyens Generaux — acces complet a tous les centres |
-| **Chef de Centre** | Responsable CMP/Actel — acces restreint a son centre uniquement |
+| **Administrator** | General Resources Engineer — full access to all centers and data |
+| **Center Manager** | Regional center head — access restricted to their own center |
 
 ---
 
-## Fonctionnalites
+## Features
 
-### Gestion des vehicules
-- Ajout, modification, suppression et consultation des vehicules
-- Suivi du kilometrage (index debut/fin de mois, distance parcourue)
-- Suivi des couts (carburant, maintenance, total)
-- Attribution d'un responsable par vehicule
+### Vehicle Management
+- Full CRUD operations on the vehicle registry
+- Monthly mileage tracking (start/end index, distance traveled)
+- Cost tracking per vehicle (fuel, maintenance, total)
+- Assignment of a responsible person per vehicle
 
-### Gestion des reparations
-- Cycle de vie complet : `Planifiee` → `En cours` → `Terminee` / `Annulee`
-- Association de pieces detachees (quantite, prix unitaire utilise)
-- Historique complet des interventions par vehicule
+### Repair Management
+- Complete lifecycle tracking: `Planned` → `In Progress` → `Completed` / `Cancelled`
+- Spare parts association per repair (quantity, unit price at time of use)
+- Full repair history per vehicle
 
-### Gestion des pieces detachees
-- Inventaire complet (nom, reference, prix unitaire, stock actuel/minimum)
-- Alertes de stock bas
+### Spare Parts Inventory
+- Parts catalog with name, reference, unit price, current and minimum stock levels
+- Low-stock alerts
 
-### Gestion des utilisateurs
-- Authentification securisee via JWT (access + refresh tokens)
-- Systeme de roles/permissions : `ADMIN` / `CHEF`
-- L'admin gere tous les centres ; le chef ne voit que son propre centre
+### User Management
+- Secure authentication with JWT (access + refresh tokens)
+- Role-based permissions system: `ADMIN` / `CHEF`
+- Admins see all centers; center managers only see their own data
 
 ### Reporting & Export
-- Export des donnees en **Excel** (`.xlsx`)
-- Global pour l'admin, filtre par centre pour le chef
-- Calcul automatique : `Cout total = Sigma carburant + Sigma maintenance`
+- Data export to **Excel** (`.xlsx`)
+- Global export for admins, filtered by center for managers
+- Automatic cost calculation: `Total cost = Sum(fuel) + Sum(maintenance)`
 
 ---
 
 ## Architecture
 
-Le projet suit une architecture **MVC (Modele–Vue–Controleur)** :
+The project follows an **MVC (Model-View-Controller)** architecture:
 
 ```
 User  <->  View (React)  <->  Controller (Node/Express)  <->  Model  <->  MySQL Database
 ```
 
 ```
-fleet_manager/
-├── backend/                  # API REST (Node.js / Express / TypeScript)
+fleet-manager/
+├── backend/                  # REST API (Node.js / Express / TypeScript)
 │   ├── src/
-│   │   ├── config/           # Configuration base de donnees + schema
-│   │   ├── middleware/       # Authentification JWT & validation
-│   │   ├── routes/           # Routes API REST
+│   │   ├── config/           # Database configuration & schema
+│   │   ├── middleware/       # JWT authentication & request validation
+│   │   ├── routes/           # REST API route handlers
 │   │   │   ├── authroutes.js
 │   │   │   ├── vehiculeroutes.js
 │   │   │   ├── reparationroutes.js
 │   │   │   ├── piecesroutes.js
 │   │   │   ├── carburantroutes.js
 │   │   │   └── usersroutes.js
-│   │   ├── services/         # Logique metier
-│   │   ├── types/            # Types TypeScript
-│   │   └── server.ts         # Point d'entree serveur
+│   │   ├── services/         # Business logic layer
+│   │   ├── types/            # TypeScript type definitions
+│   │   └── server.ts         # Server entry point
 │   ├── .env.example
 │   ├── package.json
 │   └── tsconfig.json
 │
-├── frontend/                 # Interface utilisateur (React / TypeScript / Vite)
+├── frontend/                 # Client application (React / TypeScript / Vite)
 │   ├── src/
-│   │   ├── components/       # Composants React (Login, VehicleList, RepairList, etc.)
-│   │   ├── context/          # Contexte d'authentification
-│   │   ├── hooks/            # Hooks personnalises
-│   │   ├── lib/              # Utilitaires & appels API
-│   │   ├── pages/            # Pages de l'application
-│   │   └── types/            # Types TypeScript
+│   │   ├── components/       # React components (Login, VehicleList, RepairList, etc.)
+│   │   ├── context/          # Authentication context
+│   │   ├── hooks/            # Custom React hooks
+│   │   ├── lib/              # Utilities & API client
+│   │   ├── pages/            # Application pages
+│   │   └── types/            # TypeScript type definitions
 │   ├── package.json
 │   ├── vite.config.ts
 │   └── tailwind.config.ts
@@ -123,36 +123,37 @@ fleet_manager/
 
 ---
 
-## Stack technique
+## Tech Stack
 
-| Couche | Technologies |
-|--------|-------------|
+| Layer | Technologies |
+|-------|-------------|
 | **Backend** | Node.js, Express.js, TypeScript |
 | **Frontend** | React 19, TypeScript, Vite, Tailwind CSS |
 | **UI Components** | Radix UI, shadcn/ui, Lucide Icons, Framer Motion |
-| **Base de donnees** | MySQL |
-| **Authentification** | JWT (jsonwebtoken), bcryptjs |
-| **Etat & Data Fetching** | Zustand, TanStack React Query |
-| **Formulaires** | React Hook Form, Zod (validation) |
-| **Export Excel** | SheetJS (xlsx) |
-| **Maquettage** | Figma |
+| **Database** | MySQL |
+| **Authentication** | JWT (jsonwebtoken), bcryptjs |
+| **State & Data Fetching** | Zustand, TanStack React Query |
+| **Forms & Validation** | React Hook Form, Zod |
+| **Excel Export** | SheetJS (xlsx) |
+| **UI Design** | Figma |
 
 ---
 
-## Modele de donnees
+## Data Model
 
 ```
 ┌────────────────────┐          ┌────────────────────────┐
 │   UTILISATEUR      │          │      VEHICULE          │
+│   (User)           │          │      (Vehicle)         │
 ├────────────────────┤          ├────────────────────────┤
 │ PK id_utilisateur  │<────────┐│ PK id_vehicule         │
-│    nom             │         ││    marque              │
-│    email (UNIQUE)  │         ││    modele              │
-│    mot_de_passe    │         ││    annee               │
+│    nom             │         ││    marque (brand)      │
+│    email (UNIQUE)  │         ││    modele (model)      │
+│    mot_de_passe    │         ││    annee (year)        │
 │    role (ADMIN/CHEF│         ││    vin (UNIQUE)        │
 │    is_active       │         ││    numero_plaque       │
 │    last_login      │         ││ FK responsable_id ─────┘
-│    created_at      │         │    statut              │
+│    created_at      │         │    statut (status)     │
 │    updated_at      │         │    index_debut_mois    │
 └────────────────────┘         │    index_fin_mois      │
          │                     │    total_carburant_prix │
@@ -162,12 +163,13 @@ fleet_manager/
          v                     └───────────┬────────────┘
 ┌────────────────────┐                     │ vehicle_id
 │   REPARATION       │<────────────────────┘
+│   (Repair)         │
 ├────────────────────┤
 │ PK id_reparation   │
 │    date_reparation  │
 │    description     │         ┌────────────────────────┐
 │    cout_total      │         │  REPARATION_PIECE      │
-│    statut          │         ├────────────────────────┤
+│    statut          │         │  (Repair-Part)         │
 │ FK vehicule_id     │<────────│ PK/FK reparation_id    │
 │ FK created_by      │         │ PK/FK piece_id ────────┤
 │    created_at      │         │    quantite            │
@@ -176,9 +178,10 @@ fleet_manager/
                                             │
                                ┌────────────v───────────┐
                                │      PIECE             │
+                               │      (Spare Part)      │
                                ├────────────────────────┤
                                │ PK id_piece            │
-                               │    nom                 │
+                               │    nom (name)          │
                                │    reference           │
                                │    prix_unitaire       │
                                │    stock_actuel        │
@@ -189,52 +192,52 @@ fleet_manager/
 
 ---
 
-## Roles et permissions
+## Roles & Permissions
 
-| Fonctionnalite | Admin | Chef |
-|----------------|:-----:|:----:|
-| Gerer les utilisateurs | Oui | Non |
-| Voir tous les vehicules (tous centres) | Oui | Non |
-| Voir les vehicules de son centre | Oui | Oui |
-| Historique complet des reparations | Oui | Non |
-| Consulter les reparations de son centre | Oui | Oui |
-| Changer le statut d'une reparation | Oui | Non |
-| Demander une nouvelle reparation | Oui | Oui |
-| Modifier les prix des pieces | Oui | Non |
-| Export Excel global | Oui | Non |
-| Export Excel (filtre par centre) | Oui | Oui |
+| Feature | Admin | Center Manager |
+|---------|:-----:|:--------------:|
+| Manage users | Yes | No |
+| View all vehicles (all centers) | Yes | No |
+| View vehicles in own center | Yes | Yes |
+| Full repair history | Yes | No |
+| View repairs in own center | Yes | Yes |
+| Update repair status | Yes | No |
+| Request a new repair | Yes | Yes |
+| Edit spare part prices | Yes | No |
+| Global Excel export | Yes | No |
+| Filtered Excel export (own center) | Yes | Yes |
 
 ---
 
-## Installation
+## Getting Started
 
-### Prerequis
+### Prerequisites
 
 - [Node.js](https://nodejs.org/) (v18+)
 - [MySQL](https://www.mysql.com/) (v8+)
 - [Git](https://git-scm.com/)
 
-### 1. Cloner le depot
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/<your-username>/fleet-manager.git
+git clone https://github.com/boutainadts1/fleet-manager.git
 cd fleet-manager
 ```
 
-### 2. Configurer le backend
+### 2. Set up the backend
 
 ```bash
 cd backend
 npm install
 ```
 
-Creer un fichier `.env` a partir du template :
+Create a `.env` file from the provided template:
 
 ```bash
 cp .env.example .env
 ```
 
-Puis modifier les variables dans `.env` avec vos propres valeurs :
+Then edit `.env` with your own values:
 
 ```env
 DB_HOST=localhost
@@ -246,63 +249,63 @@ JWT_SECRET=your_secret_key
 PORT=3001
 ```
 
-> **Note :** La base de donnees et les tables sont creees automatiquement au demarrage du serveur.
+> **Note:** The database schema and tables are created automatically on server startup.
 
-### 3. Configurer le frontend
+### 3. Set up the frontend
 
 ```bash
 cd ../frontend
 npm install
 ```
 
-### 4. Lancer l'application
+### 4. Run the application
 
-**Backend** (depuis `/backend`) :
+**Backend** (from `/backend`):
 ```bash
 npm run dev
 ```
 
-**Frontend** (depuis `/frontend`) :
+**Frontend** (from `/frontend`):
 ```bash
 npm run dev
 ```
 
-L'application sera accessible sur `http://localhost:5173` (frontend) et l'API sur `http://localhost:3001` (backend).
+The app will be available at `http://localhost:5173` (frontend) and the API at `http://localhost:3001` (backend).
 
 ---
 
-## Deploiement
+## Deployment
 
-L'application est deployee en production et utilisee par les utilisateurs reels d'Algerie Telecom :
+The application is deployed to production and actively used by real end users at Algerie Telecom:
 
-| Composant | Plateforme | URL |
-|-----------|-----------|-----|
+| Component | Platform | URL |
+|-----------|----------|-----|
 | **Frontend** | Netlify | [dot-parcauto.netlify.app](https://dot-parcauto.netlify.app/) |
-| **Backend (API)** | Render | API REST securisee |
-| **Base de donnees** | Clever Cloud | MySQL avec sauvegardes automatisees |
+| **Backend API** | Render | Secured REST API |
+| **Database** | Clever Cloud | MySQL with automated backups |
 
 ---
 
-## Resultats
+## Results
 
-- Application **fonctionnelle et deployee en production**, utilisee par les utilisateurs reels (administrateur et chefs de centre)
-- Tests utilisateurs concluants : interface jugee **intuitive**, authentification/permissions fiables
-- Export Excel apprecie pour les **rapports mensuels**
-- **Reduction du travail manuel** et meilleure tracabilite des donnees du parc automobile
+- Fully functional application **deployed to production** and used by real users (administrators and center managers)
+- Positive user testing feedback: interface rated as **intuitive**, authentication and permissions working reliably
+- Excel export appreciated for **monthly reporting**
+- Significant **reduction in manual work** and improved traceability of fleet data
 
 ---
 
-## Auteure
+## Author
 
 **Doulate-Serouri Boutaina**
 
-Eleve ingenieure — [ESI](https://www.esi.dz/) (Ecole Nationale Superieure d'Informatique)
-2eme annee Cycle Superieur (2CS), option Systemes Informatiques et Logiciels
+Engineering student — [ESI](https://www.esi.dz/) (Ecole Nationale Superieure d'Informatique)
+2nd year Higher Cycle (2CS), Software & Information Systems track
 
-**Stage encadre par :** Drief Adda, Ingenieur Reseau Informatique — Algerie Telecom, Direction Operationnelle de Relizane
+**Internship supervised by:** Drief Adda, IT Network Engineer — Algerie Telecom
 
 ---
 
-## Licence
+## License
 
-Ce projet est distribue sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus d'informations.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
