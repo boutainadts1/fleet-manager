@@ -36,7 +36,7 @@
 
 ## About
 
-> Developed during an end-of-studies internship (2nd year, Higher Cycle — Software & Information Systems) at **ESI** (Ecole Nationale Superieure d'Informatique), within the General Resources department of **Algerie Telecom**.
+> Web application developed as part of the SPE internship (2nd year Cycle Supérieur, Software Engineering track) at ESI — the internship required to advance to the specialization year of the cycle supérieur — carried out within the General Resources department of **Algerie Telecom**.
 
 Algerie Telecom operates a fleet of vehicles distributed across multiple regional centers. Managing vehicle data manually — mileage tracking, fuel costs, repairs, spare parts inventory — led to inefficiencies, human errors, and a lack of visibility for decision-making.
 
