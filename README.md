@@ -276,13 +276,13 @@ The app will be available at `http://localhost:5173` (frontend) and the API at `
 
 ## Deployment
 
-The application is deployed to production and actively used by real end users at Algerie Telecom:
+The application is deployed to production and actively used by real end users. The entire system is hosted securely on **Algérie Télécom's internal servers**. 
 
-| Component | Platform | URL |
-|-----------|----------|-----|
-| **Frontend** | Netlify | [dot-parcauto.netlify.app](https://dot-parcauto.netlify.app/) |
-| **Backend API** | Render | Secured REST API |
-| **Database** | Clever Cloud | MySQL with automated backups |
+The infrastructure is containerized and orchestrated using **Kubernetes**, which provides several key benefits:
+- **Data Security & Sovereignty:** All sensitive fleet and user data remains entirely within Algérie Télécom's on-premise network.
+- **High Availability & Reliability:** Kubernetes automatically manages container health, ensuring the platform remains accessible for regional centers at all times without downtime.
+- **Scalability:** The architecture can seamlessly scale to accommodate an increasing number of vehicles, users, and regional centers across the country.
+- **Streamlined Management:** Automated deployment, rolling updates, and resource management for the frontend, backend, and database components.
 
 ---
 
